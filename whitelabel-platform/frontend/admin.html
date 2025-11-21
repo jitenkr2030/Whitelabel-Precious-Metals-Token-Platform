@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Admin Dashboard - Whitelabel Token Platform</title>
+    
+    <!-- Material-UI CSS -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-ui/4.12.4/material-ui.min.css" integrity="sha512-v6G9oLw5uQj8QfP7a4s5L5g5Wz5m5m5m5WcF5o7Y5l5N8x5t5v8t5v5t5t5t5t5t5t5t5t5t5t5t5t5t5t5t" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            /* These colors will be dynamically replaced with client brand colors */
+            --primary-color: #007AFF;
+            --secondary-color: #5856D6;
+            --accent-color: #BF953F;
+            --background-color: #F8F9FA;
+            --card-background: #FFFFFF;
+            --text-primary: #212529;
+            --text-secondary: #6C757D;
+            --border-color: #E9ECEF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .company-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        .container {
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+
+        .sidebar {
+            width: 280px;
+            background: var(--card-background);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 0;
+        }
+
+        .sidebar nav ul {
+            list-style: none;
+        }
+
+        .sidebar nav li {
+            margin: 0;
+        }
+
+        .sidebar nav a {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 2rem;
+            text-decoration: none;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .sidebar nav a:hover {
+            background: var(--background-color);
+            color: var(--primary-color);
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .sidebar nav a.active {
+            background: var(--background-color);
+            color: var(--primary-color);
+            border-left: 3px solid var(--primary-color);
+            font-weight: 500;
+        }
+
+        .sidebar nav .material-icons {
+            margin-right: 0.75rem;
+            font-size: 20px;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: var(--card-background);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        .metric-card h3 {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-change {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .metric-change.positive {
+            color: #28A745;
+        }
+
+        .metric-change.negative {
+            color: #DC3545;
+        }
+
+        .metric-change.neutral {
+            color: var(--text-secondary);
+        }
+
+        .chart-container {
+            background: var(--card-background);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .chart-title {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .activity-list {
+            background: var(--card-background);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .activity-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .activity-title {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .activity-item {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-description {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .activity-time {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .activity-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 16px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .activity-status.success {
+            background: #D4EDDA;
+            color: #155724;
+        }
+
+        .activity-status.pending {
+            background: #FFF3CD;
+            color: #856404;
+        }
+
+        .activity-status.error {
+            background: #F8D7DA;
+            color: #721C24;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--text-secondary);
+            color: white;
+        }
+
+        .btn-success {
+            background: #28A745;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #DC3545;
+            color: white;
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border-color);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .alert-success {
+            background: #D4EDDA;
+            color: #155724;
+            border: 1px solid #C3E6CB;
+        }
+
+        .alert-error {
+            background: #F8D7DA;
+            color: #721C24;
+            border: 1px solid #F5C6CB;
+        }
+
+        .alert-warning {
+            background: #FFF3CD;
+            color: #856404;
+            border: 1px solid #FFEEBA;
+        }
+
+        .alert-info {
+            background: #D1ECF1;
+            color: #0C5460;
+            border: 1px solid #BEE5EB;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+
+            .company-name {
+                font-size: 1.25rem;
+            }
+
+            .sidebar {
+                width: 100%;
+                position: fixed;
+                z-index: 1000;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .metric-value {
+                font-size: 2rem;
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --background-color: #121212;
+                --card-background: #1E1E1E;
+                --text-primary: #FFFFFF;
+                --text-secondary: #B3B3B3;
+                --border-color: #333333;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <img id="companyLogo" src="" alt="Company Logo" style="display: none;">
+            <span class="company-name" id="companyName">Loading...</span>
+        </div>
+        <div class="user-info">
+            <div class="user-avatar" id="userAvatar">A</div>
+            <span id="userName">Admin User</span>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="#" class="nav-link active" data-page="dashboard">
+                        <span class="material-icons">dashboard</span>
+                        Dashboard
+                    </a></li>
+                    <li><a href="#" class="nav-link" data-page="users">
+                        <span class="material-icons">people</span>
+                        Users
+                    </a></li>
+                    <li><a href="#" class="nav-link" data-page="trading">
+                        <span class="material-icons">trending_up</span>
+                        Trading
+                    </a></li>
+                    <li><a href="#" class="nav-link" data-page="transactions">
+                        <span class="material-icons">receipt</span>
+                        Transactions
+                    </a></li>
+                    <li><a href="#" class="nav-link" data-page="kyc">
+                        <span class="material-icons">verified_user</span>
+                        KYC Management
+                    </a></li>
+                    <li><a href="#" class="nav-link" data-page="vault">
+                        <span class="material-icons">store</span>
+                        Vault Management
+                    </a></li>
+                    <li><a href="#" class="nav-link" data-page="payments">
+                        <span class="material-icons">payment</span>
+                        Payments
+                    </a></li>
+                    <li><a href="#" class="nav-link" data-page="compliance">
+                        <span class="material-icons">gavel</span>
+                        Compliance
+                    </a></li>
+                    <li><a href="#" class="nav-link" data-page="reports">
+                        <span class="material-icons">analytics</span>
+                        Reports
+                    </a></li>
+                    <li><a href="#" class="nav-link" data-page="settings">
+                        <span class="material-icons">settings</span>
+                        Settings
+                    </a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <h1 class="page-title">Dashboard Overview</h1>
+
+            <!-- Alert Container -->
+            <div id="alertContainer"></div>
+
+            <!-- Loading Indicator -->
+            <div class="loading" id="loadingIndicator" style="display: none;">
+                <div class="spinner"></div>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div id="dashboardContent">
+                <!-- Metrics Grid -->
+                <div class="dashboard-grid">
+                    <div class="metric-card">
+                        <h3>Total Users</h3>
+                        <div class="metric-value" id="totalUsers">0</div>
+                        <div class="metric-change positive" id="usersGrowth">+0% this month</div>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Active Users</h3>
+                        <div class="metric-value" id="activeUsers">0</div>
+                        <div class="metric-change positive" id="activeGrowth">+0% this week</div>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Verified KYC</h3>
+                        <div class="metric-value" id="verifiedUsers">0</div>
+                        <div class="metric-change neutral" id="kycRate">0% verification rate</div>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Total Volume</h3>
+                        <div class="metric-value" id="totalVolume">₹0</div>
+                        <div class="metric-change positive" id="volumeGrowth">+0% this month</div>
+                    </div>
+                </div>
+
+                <!-- Trading Volume Chart -->
+                <div class="chart-container">
+                    <h3 class="chart-title">Trading Volume (Last 30 Days)</h3>
+                    <canvas id="volumeChart" width="400" height="200"></canvas>
+                </div>
+
+                <!-- Asset Distribution Chart -->
+                <div class="chart-container">
+                    <h3 class="chart-title">Asset Distribution</h3>
+                    <canvas id="assetChart" width="400" height="200"></canvas>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="activity-list">
+                    <div class="activity-header">
+                        <h3 class="activity-title">Recent Activity</h3>
+                    </div>
+                    <div id="activityList">
+                        <div class="activity-item">
+                            <div class="activity-content">
+                                <div class="activity-description">Loading recent activities...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/material-ui/4.12.4/umd/material-ui.min.js" integrity="sha512-6xG2x2o5x5n5m5o5t5n5t5n5t5t5t5n5t5t5t5t5n5t5t5t5t5t5t5t5t5n5t5t5t5t5t5t5t5t5t5t5t5t5t" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        // Global variables
+        let currentTenant = null;
+        let authToken = null;
+        let charts = {};
+
+        // Initialize application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+
+        async function initializeApp() {
+            try {
+                // Show loading
+                showLoading();
+                
+                // Load tenant configuration
+                await loadTenantConfig();
+                
+                // Set up authentication
+                await setupAuthentication();
+                
+                // Load dashboard data
+                await loadDashboardData();
+                
+                // Set up navigation
+                setupNavigation();
+                
+                // Hide loading
+                hideLoading();
+                
+                // Show success message
+                showAlert('Dashboard loaded successfully', 'success');
+                
+            } catch (error) {
+                console.error('Failed to initialize app:', error);
+                showAlert('Failed to load dashboard. Please refresh the page.', 'error');
+                hideLoading();
+            }
+        }
+
+        async function loadTenantConfig() {
+            try {
+                const response = await fetch('/api/v1/tenant/config', {
+                    headers: {
+                        'X-Tenant-Id': getTenantId(),
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to load tenant config');
+                }
+
+                const config = await response.json();
+                currentTenant = config;
+                
+                // Apply branding
+                applyBranding(config.brand);
+                
+                // Update UI
+                document.getElementById('companyName').textContent = config.companyName;
+                document.getElementById('pageTitle').textContent = `Admin Dashboard - ${config.companyName}`;
+                
+            } catch (error) {
+                console.error('Error loading tenant config:', error);
+                // Use default branding if config fails to load
+                applyDefaultBranding();
+            }
+        }
+
+        function applyBranding(brandConfig) {
+            if (!brandConfig) return;
+            
+            const root = document.documentElement;
+            
+            // Apply colors
+            if (brandConfig.primaryColor) {
+                root.style.setProperty('--primary-color', brandConfig.primaryColor);
+            }
+            if (brandConfig.secondaryColor) {
+                root.style.setProperty('--secondary-color', brandConfig.secondaryColor);
+            }
+            if (brandConfig.accentColor) {
+                root.style.setProperty('--accent-color', brandConfig.accentColor);
+            }
+            
+            // Apply logo
+            if (brandConfig.logoUrl) {
+                const logo = document.getElementById('companyLogo');
+                logo.src = brandConfig.logoUrl;
+                logo.style.display = 'block';
+            }
+        }
+
+        function applyDefaultBranding() {
+            // Default blue theme
+            const root = document.documentElement;
+            root.style.setProperty('--primary-color', '#007AFF');
+            root.style.setProperty('--secondary-color', '#5856D6');
+            root.style.setProperty('--accent-color', '#BF953F');
+        }
+
+        async function setupAuthentication() {
+            // In a real implementation, this would handle JWT tokens
+            // For demo purposes, we'll simulate authentication
+            const token = localStorage.getItem('auth_token');
+            if (token) {
+                authToken = token;
+            } else {
+                // Simulate login - in real app, this would be actual login
+                authToken = 'demo_token_' + Date.now();
+                localStorage.setItem('auth_token', authToken);
+            }
+        }
+
+        function getTenantId() {
+            // In a real implementation, this would come from URL or server
+            return localStorage.getItem('tenant_id') || 'demo-tenant-id';
+        }
+
+        async function loadDashboardData() {
+            try {
+                // Load user metrics
+                await loadUserMetrics();
+                
+                // Load trading data
+                await loadTradingData();
+                
+                // Load recent activities
+                await loadRecentActivities();
+                
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+                showAlert('Failed to load dashboard data', 'error');
+            }
+        }
+
+        async function loadUserMetrics() {
+            try {
+                const response = await fetch('/api/v1/admin/dashboard', {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'X-Tenant-Id': getTenantId(),
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to load user metrics');
+                }
+
+                const data = await response.json();
+                const metrics = data.metrics;
+
+                // Update UI
+                document.getElementById('totalUsers').textContent = formatNumber(metrics.users.total_users);
+                document.getElementById('activeUsers').textContent = formatNumber(metrics.users.new_today);
+                document.getElementById('verifiedUsers').textContent = formatNumber(metrics.users.verified_users);
+                document.getElementById('totalVolume').textContent = formatCurrency(metrics.trading.total_volume);
+
+                // Update growth indicators
+                const verificationRate = metrics.users.verified_users / metrics.users.total_users * 100;
+                document.getElementById('kycRate').textContent = `${verificationRate.toFixed(1)}% verification rate`;
+                
+            } catch (error) {
+                console.error('Error loading user metrics:', error);
+                // Use demo data
+                updateUserMetricsDemo();
+            }
+        }
+
+        function updateUserMetricsDemo() {
+            document.getElementById('totalUsers').textContent = '12,450';
+            document.getElementById('activeUsers').textContent = '1,234';
+            document.getElementById('verifiedUsers').textContent = '8,567';
+            document.getElementById('totalVolume').textContent = '₹45,67,89,012';
+            document.getElementById('kycRate').textContent = '68.8% verification rate';
+        }
+
+        async function loadTradingData() {
+            try {
+                // Create volume chart
+                createVolumeChart();
+                
+                // Create asset distribution chart
+                createAssetChart();
+                
+            } catch (error) {
+                console.error('Error loading trading data:', error);
+                createDemoCharts();
+            }
+        }
+
+        function createVolumeChart() {
+            const ctx = document.getElementById('volumeChart').getContext('2d');
+            
+            // Generate demo data for last 30 days
+            const labels = [];
+            const data = [];
+            const today = new Date();
+            
+            for (let i = 29; i >= 0; i--) {
+                const date = new Date(today);
+                date.setDate(date.getDate() - i);
+                labels.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+                
+                // Generate realistic trading volume data
+                const baseVolume = 1000000;
+                const variation = Math.random() * 500000;
+                data.push(baseVolume + variation);
+            }
+            
+            charts.volumeChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Trading Volume (₹)',
+                        data: data,
+                        borderColor: getComputedStyle(document.documentElement).getPropertyValue('--primary-color'),
+                        backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--primary-color') + '20',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '₹' + formatNumber(value);
+                                }
+                            }
+                        },
+                        x: {
+                            display: true,
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function createAssetChart() {
+            const ctx = document.getElementById('assetChart').getContext('2d');
+            
+            charts.assetChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Gold (BGT)', 'Silver (BST)', 'Platinum (BPT)'],
+                    datasets: [{
+                        data: [65, 25, 10],
+                        backgroundColor: [
+                            getComputedStyle(document.documentElement).getPropertyValue('--accent-color'),
+                            '#C0C0C0',
+                            '#E5E4E2'
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#FFFFFF'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        function createDemoCharts() {
+            // Demo charts with static data
+            createVolumeChart();
+            createAssetChart();
+        }
+
+        async function loadRecentActivities() {
+            try {
+                const activities = [
+                    {
+                        description: 'New KYC verification: Rajesh K.',
+                        time: '2 minutes ago',
+                        status: 'success'
+                    },
+                    {
+                        description: 'Large buy order: 500g Gold BGT',
+                        time: '5 minutes ago',
+                        status: 'success'
+                    },
+                    {
+                        description: 'Redemption request: 100g Platinum BPT',
+                        time: '10 minutes ago',
+                        status: 'pending'
+                    },
+                    {
+                        description: 'Payment failed for transaction #TXN123456',
+                        time: '15 minutes ago',
+                        status: 'error'
+                    },
+                    {
+                        description: 'Vault inventory updated: +1000g Gold',
+                        time: '1 hour ago',
+                        status: 'success'
+                    }
+                ];
+
+                const activityList = document.getElementById('activityList');
+                activityList.innerHTML = activities.map(activity => `
+                    <div class="activity-item">
+                        <div class="activity-content">
+                            <div class="activity-description">${activity.description}</div>
+                            <div class="activity-time">${activity.time}</div>
+                        </div>
+                        <div class="activity-status ${activity.status}">${activity.status}</div>
+                    </div>
+                `).join('');
+                
+            } catch (error) {
+                console.error('Error loading recent activities:', error);
+            }
+        }
+
+        function setupNavigation() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Get page name
+                    const page = this.getAttribute('data-page');
+                    
+                    // Load page content
+                    loadPage(page);
+                });
+            });
+        }
+
+        async function loadPage(pageName) {
+            const pageTitle = document.querySelector('.page-title');
+            const dashboardContent = document.getElementById('dashboardContent');
+            
+            // Update page title
+            const titles = {
+                'dashboard': 'Dashboard Overview',
+                'users': 'User Management',
+                'trading': 'Trading Operations',
+                'transactions': 'Transaction History',
+                'kyc': 'KYC Management',
+                'vault': 'Vault Management',
+                'payments': 'Payment Processing',
+                'compliance': 'Compliance & Reports',
+                'reports': 'Analytics & Reports',
+                'settings': 'Platform Settings'
+            };
+            
+            pageTitle.textContent = titles[pageName] || 'Dashboard';
+            
+            // Load page-specific content
+            switch (pageName) {
+                case 'dashboard':
+                    dashboardContent.style.display = 'block';
+                    break;
+                default:
+                    dashboardContent.innerHTML = `
+                        <div class="chart-container">
+                            <h3 class="chart-title">${titles[pageName]}</h3>
+                            <p>This section is under development. Contact your development team for implementation.</p>
+                            <p><strong>Target Clients:</strong> Jewellers, Gold/Silver dealers, Bullion traders, Vault companies, NBFCs, Fintech apps, Crypto exchanges</p>
+                        </div>
+                    `;
+            }
+        }
+
+        // Utility functions
+        function showLoading() {
+            document.getElementById('loadingIndicator').style.display = 'flex';
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingIndicator').style.display = 'none';
+        }
+
+        function showAlert(message, type = 'info') {
+            const alertContainer = document.getElementById('alertContainer');
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.textContent = message;
+            
+            alertContainer.appendChild(alertDiv);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 5000);
+        }
+
+        function formatNumber(num) {
+            if (num >= 1000000) {
+                return (num / 1000000).toFixed(1) + 'M';
+            } else if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'K';
+            }
+            return num.toString();
+        }
+
+        function formatCurrency(amount) {
+            return '₹' + new Intl.NumberFormat('en-IN').format(amount);
+        }
+
+        // Handle responsive navigation
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+
+        // Add mobile menu button if needed
+        if (window.innerWidth <= 768) {
+            const header = document.querySelector('.header');
+            const menuButton = document.createElement('button');
+            menuButton.innerHTML = '<span class="material-icons">menu</span>';
+            menuButton.className = 'btn btn-secondary';
+            menuButton.onclick = toggleSidebar;
+            header.insertBefore(menuButton, header.firstChild);
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                document.getElementById('sidebar').classList.remove('open');
+            }
+        });
+
+        // Initialize demo data on page load
+        setTimeout(() => {
+            if (!charts.volumeChart) {
+                updateUserMetricsDemo();
+                createDemoCharts();
+            }
+        }, 2000);
+    </script>
+</body>
+</html>

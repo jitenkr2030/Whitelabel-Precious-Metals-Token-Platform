@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whitelabel Precious Metals Token Platform - Launch Your Token Business</title>
+    <meta name="description" content="Launch your own gold, silver & platinum tokenization platform. Complete whitelabel solution for jewellers, NBFCs, fintech companies and enterprises.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Colors */
+            --accent-gold: #D4AF37;
+            --accent-gold-hover: #EACD65;
+            --dark-navy-900: #0A192F;
+            --dark-navy-800: #112240;
+            --light-slate-50: #E6F1FF;
+            --light-slate-100: #CCD6F6;
+            --slate-400: #8892B0;
+            --success: #64FFDA;
+            --gradient-primary: linear-gradient(135deg, var(--dark-navy-900) 0%, var(--dark-navy-800) 100%);
+            
+            /* Typography */
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+            
+            /* Spacing */
+            --spacing-xs: 8px;
+            --spacing-sm: 16px;
+            --spacing-md: 24px;
+            --spacing-lg: 32px;
+            --spacing-xl: 48px;
+            --spacing-xxl: 96px;
+            
+            /* Borders */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--dark-navy-900);
+            color: var(--light-slate-100);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: var(--dark-navy-900);
+            border-bottom: 1px solid var(--dark-navy-800);
+            padding: var(--spacing-md) 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .header .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-gold);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: var(--spacing-lg);
+        }
+
+        .nav-links a {
+            color: var(--light-slate-100);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        .cta-primary {
+            background: var(--accent-gold);
+            color: var(--dark-navy-900);
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cta-primary:hover {
+            background: var(--accent-gold-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: var(--spacing-xxl) 0;
+            background: var(--gradient-primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23D4AF37" fill-opacity="0.05"><polygon points="30,0 30,30 0,30"/></g></g></svg>');
+            opacity: 0.3;
+        }
+
+        .hero .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xxl);
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-family: var(--font-heading);
+            font-size: 56px;
+            font-weight: 700;
+            color: var(--light-slate-50);
+            line-height: 1.2;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .hero-content .subtitle {
+            font-size: 20px;
+            color: var(--light-slate-100);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .cta-group {
+            display: flex;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: var(--accent-gold);
+            padding: 12px 24px;
+            border: 2px solid var(--accent-gold);
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cta-secondary:hover {
+            background: var(--accent-gold);
+            color: var(--dark-navy-900);
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-lg);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--accent-gold);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--slate-400);
+            margin-top: var(--spacing-xs);
+        }
+
+        .hero-visual {
+            position: relative;
+            padding: var(--spacing-xl);
+        }
+
+        .mockup-card {
+            background: var(--dark-navy-800);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-xl);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--dark-navy-700);
+        }
+
+        .mockup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 1px solid var(--dark-navy-700);
+        }
+
+        .mockup-logo {
+            font-family: var(--font-heading);
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--accent-gold);
+        }
+
+        .mockup-nav {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .mockup-nav span {
+            width: 8px;
+            height: 8px;
+            background: var(--slate-400);
+            border-radius: 50%;
+        }
+
+        .mockup-chart {
+            height: 200px;
+            background: linear-gradient(45deg, var(--dark-navy-700), var(--dark-navy-600));
+            border-radius: var(--radius-sm);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: end;
+            padding: var(--spacing-sm);
+            gap: 4px;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: var(--accent-gold);
+            border-radius: 2px;
+            animation: chartGrow 2s ease-out;
+        }
+
+        .chart-bar:nth-child(1) { height: 60%; }
+        .chart-bar:nth-child(2) { height: 80%; }
+        .chart-bar:nth-child(3) { height: 100%; }
+        .chart-bar:nth-child(4) { height: 75%; }
+        .chart-bar:nth-child(5) { height: 90%; }
+
+        @keyframes chartGrow {
+            from { height: 0; }
+        }
+
+        .mockup-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-sm);
+        }
+
+        .info-item {
+            background: var(--dark-navy-700);
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            text-align: center;
+        }
+
+        .info-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--light-slate-50);
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: var(--slate-400);
+            margin-top: 4px;
+        }
+
+        /* Features Section */
+        .features {
+            padding: var(--spacing-xxl) 0;
+            background: var(--dark-navy-900);
+        }
+
+        .features .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--spacing-xxl);
+        }
+
+        .section-header h2 {
+            font-family: var(--font-heading);
+            font-size: 40px;
+            font-weight: 600;
+            color: var(--light-slate-50);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .section-header p {
+            font-size: 18px;
+            color: var(--light-slate-100);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-xl);
+        }
+
+        .feature-card {
+            background: var(--dark-navy-800);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-md);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-gold);
+            box-shadow: 0 20px 30px -15px rgba(100, 255, 218, 0.1);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--spacing-md);
+            font-size: 32px;
+            color: var(--dark-navy-900);
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--light-slate-50);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .feature-card p {
+            color: var(--slate-400);
+            line-height: 1.6;
+        }
+
+        /* Target Markets Section */
+        .target-markets {
+            padding: var(--spacing-xxl) 0;
+            background: var(--dark-navy-800);
+        }
+
+        .markets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .market-item {
+            background: var(--dark-navy-900);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--accent-gold);
+        }
+
+        .market-item h4 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--light-slate-50);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .market-item p {
+            color: var(--slate-400);
+            font-size: 14px;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .market-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--slate-400);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: var(--spacing-xxl) 0;
+            background: var(--gradient-primary);
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-family: var(--font-heading);
+            font-size: 40px;
+            font-weight: 600;
+            color: var(--light-slate-50);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .cta-section p {
+            font-size: 18px;
+            color: var(--light-slate-100);
+            margin-bottom: var(--spacing-xl);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-group-large {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+
+        .btn-large {
+            padding: 18px 36px;
+            font-size: 18px;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--accent-gold);
+            color: var(--dark-navy-900);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-gold-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--light-slate-50);
+            border: 2px solid var(--light-slate-100);
+        }
+
+        .btn-secondary:hover {
+            background: var(--light-slate-50);
+            color: var(--dark-navy-900);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-navy-800);
+            padding: var(--spacing-xl) 0;
+            text-align: center;
+        }
+
+        .footer .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            text-align: left;
+        }
+
+        .footer-section h4 {
+            color: var(--light-slate-50);
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: var(--slate-400);
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-gold);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--dark-navy-700);
+            padding-top: var(--spacing-lg);
+            text-align: center;
+        }
+
+        .footer-bottom p {
+            color: var(--slate-400);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-xl);
+            }
+
+            .hero-content h1 {
+                font-size: 40px;
+            }
+
+            .hero-stats {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-md);
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .cta-group {
+                flex-direction: column;
+            }
+
+            .cta-group-large {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feature-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .feature-card:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .feature-card:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .feature-card:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="#" class="logo">TokenPlatform</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#markets">Markets</a></li>
+                    <li><a href="pricing.html">Pricing</a></li>
+                </ul>
+            </nav>
+            <a href="pricing.html" class="cta-primary">Get Started</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <h1>Launch Your Precious Metals Token Platform</h1>
+                    <p class="subtitle">Complete whitelabel solution for Gold, Silver & Platinum tokenization. Perfect for jewellers, NBFCs, fintech companies, and enterprises.</p>
+                    
+                    <div class="cta-group">
+                        <a href="pricing.html" class="cta-primary">View Pricing</a>
+                        <a href="#features" class="cta-secondary">Learn More</a>
+                    </div>
+
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <span class="stat-number">₹4.6Cr</span>
+                            <span class="stat-label">Year 1 Revenue Target</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">368K+</span>
+                            <span class="stat-label">Potential Clients</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">75-85%</span>
+                            <span class="stat-label">Profit Margins</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="mockup-card">
+                        <div class="mockup-header">
+                            <div class="mockup-logo">Your Brand</div>
+                            <div class="mockup-nav">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="mockup-chart">
+                            <div class="chart-bar"></div>
+                            <div class="chart-bar"></div>
+                            <div class="chart-bar"></div>
+                            <div class="chart-bar"></div>
+                            <div class="chart-bar"></div>
+                        </div>
+                        <div class="mockup-info">
+                            <div class="info-item">
+                                <div class="info-value">₹2.5Cr</div>
+                                <div class="info-label">Portfolio Value</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-value">15.2%</div>
+                                <div class="info-label">YTD Return</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-value">1,247</div>
+                                <div class="info-label">Active Users</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-value">₹1.8Cr</div>
+                                <div class="info-label">Monthly Volume</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Complete Platform Solution</h2>
+                <p>Everything you need to launch and operate a successful precious metals tokenization business</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>White-Label Mobile Apps</h3>
+                    <p>Custom-branded iOS and Android applications with your logo, colors, and domain. Complete user experience under your brand.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <h3>Gold, Silver & Platinum Tokens</h3>
+                    <p>Complete tokenization infrastructure for precious metals. Support for multiple asset types with real-time pricing and vault backing.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Enterprise Security & Compliance</h3>
+                    <p>Bank-grade security with KYC/AML compliance, audit trails, and regulatory reporting. Built for financial services requirements.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-vault"></i>
+                    </div>
+                    <h3>Vault Integration</h3>
+                    <p>Seamless integration with certified vaults (MMTC-PAMP, SafeGold, Augmont). Real-time inventory tracking and custody management.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3>Payment Processing</h3>
+                    <p>Complete payment infrastructure with UPI, cards, net banking, and wallet support. Multiple payment gateway integrations.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Analytics & Reporting</h3>
+                    <p>Advanced analytics dashboard with real-time metrics, transaction monitoring, and comprehensive business intelligence.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Target Markets Section -->
+    <section class="target-markets" id="markets">
+        <div class="container">
+            <div class="section-header">
+                <h2>Target Markets</h2>
+                <p>Serving diverse industries across India's precious metals ecosystem</p>
+            </div>
+
+            <div class="markets-grid">
+                <div class="market-item">
+                    <h4>💍 Jewellers</h4>
+                    <p>Digital inventory tokenization and expanded customer base</p>
+                    <div class="market-stats">
+                        <span>~300,000 businesses</span>
+                        <span>High demand</span>
+                    </div>
+                </div>
+
+                <div class="market-item">
+                    <h4>🏪 Gold/Silver Dealers</h4>
+                    <p>Enhanced trading capabilities and liquidity solutions</p>
+                    <div class="market-stats">
+                        <span>~50,000 businesses</span>
+                        <span>Growing segment</span>
+                    </div>
+                </div>
+
+                <div class="market-item">
+                    <h4>💰 NBFCs</h4>
+                    <p>Asset-backed lending products and investment options</p>
+                    <div class="market-stats">
+                        <span>~10,000 companies</span>
+                        <span>Enterprise focus</span>
+                    </div>
+                </div>
+
+                <div class="market-item">
+                    <h4>📱 Fintech Apps</h4>
+                    <p>Complete tokenization integration for existing platforms</p>
+                    <div class="market-stats">
+                        <span>~1,500 apps</span>
+                        <span>Tech-savvy</span>
+                    </div>
+                </div>
+
+                <div class="market-item">
+                    <h4>🏦 Bullion Traders</h4>
+                    <p>Lower storage costs and enhanced trading features</p>
+                    <div class="market-stats">
+                        <span>~5,000 traders</span>
+                        <span>Professional market</span>
+                    </div>
+                </div>
+
+                <div class="market-item">
+                    <h4>🔒 Crypto Exchanges</h4>
+                    <p>Precious metals trading pairs and DeFi integration</p>
+                    <div class="market-stats">
+                        <span>~50 exchanges</span>
+                        <span>High value</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Launch Your Token Platform?</h2>
+            <p>Choose from our transparent pricing packages and start building your precious metals tokenization business today.</p>
+            
+            <div class="cta-group-large">
+                <a href="pricing.html" class="btn-large btn-primary">View Pricing Plans</a>
+                <a href="#contact" class="btn-large btn-secondary">Schedule Demo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Platform</h4>
+                    <p>Complete whitelabel solution for precious metals tokenization. Built for businesses ready to enter the digital asset economy.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Solutions</h4>
+                    <p><a href="#">White Label Lite</a></p>
+                    <p><a href="#">Whitelabel Pro</a></p>
+                    <p><a href="#">Enterprise Packages</a></p>
+                    <p><a href="#">Custom Development</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <p><a href="#">Documentation</a></p>
+                    <p><a href="#">API Reference</a></p>
+                    <p><a href="#">Case Studies</a></p>
+                    <p><a href="#">Support Center</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <p><a href="#">About Us</a></p>
+                    <p><a href="#">Careers</a></p>
+                    <p><a href="#">Contact</a></p>
+                    <p><a href="#">Legal</a></p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Whitelabel Token Platform. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(10, 25, 47, 0.95)';
+            } else {
+                header.style.background = 'var(--dark-navy-900)';
+            }
+        });
+
+        // Animate feature cards on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

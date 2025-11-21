@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - Whitelabel Precious Metals Token Platform</title>
+    <meta name="description" content="Transparent pricing for Gold, Silver & Platinum tokenization platform. Choose from Lite, Pro & Enterprise packages.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Colors */
+            --accent-gold: #D4AF37;
+            --accent-gold-hover: #EACD65;
+            --dark-navy-900: #0A192F;
+            --dark-navy-800: #112240;
+            --light-slate-50: #E6F1FF;
+            --light-slate-100: #CCD6F6;
+            --slate-400: #8892B0;
+            --success: #64FFDA;
+            --error: #E57373;
+            
+            /* Typography */
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+            
+            /* Spacing */
+            --spacing-xs: 8px;
+            --spacing-sm: 16px;
+            --spacing-md: 24px;
+            --spacing-lg: 32px;
+            --spacing-xl: 48px;
+            --spacing-xxl: 96px;
+            
+            /* Borders */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--dark-navy-900);
+            color: var(--light-slate-100);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: var(--dark-navy-900);
+            border-bottom: 1px solid var(--dark-navy-800);
+            padding: var(--spacing-md) 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .header .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-gold);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: var(--spacing-lg);
+        }
+
+        .nav-links a {
+            color: var(--light-slate-100);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        .cta-primary {
+            background: var(--accent-gold);
+            color: var(--dark-navy-900);
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cta-primary:hover {
+            background: var(--accent-gold-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: var(--spacing-xxl) 0;
+            text-align: center;
+            background: linear-gradient(135deg, var(--dark-navy-900) 0%, var(--dark-navy-800) 100%);
+        }
+
+        .hero .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+        }
+
+        .hero h1 {
+            font-family: var(--font-heading);
+            font-size: 56px;
+            font-weight: 700;
+            color: var(--light-slate-50);
+            line-height: 1.2;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .hero .subtitle {
+            font-size: 20px;
+            color: var(--light-slate-100);
+            max-width: 600px;
+            margin: 0 auto var(--spacing-xl);
+        }
+
+        .hero .value-props {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-xl);
+            flex-wrap: wrap;
+            margin-top: var(--spacing-xl);
+        }
+
+        .value-prop {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            color: var(--light-slate-100);
+        }
+
+        .value-prop i {
+            color: var(--success);
+            font-size: 20px;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: var(--spacing-xxl) 0;
+            background: var(--dark-navy-900);
+        }
+
+        .pricing .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: var(--spacing-xxl);
+        }
+
+        .pricing-header h2 {
+            font-family: var(--font-heading);
+            font-size: 40px;
+            font-weight: 600;
+            color: var(--light-slate-50);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .pricing-header p {
+            font-size: 18px;
+            color: var(--light-slate-100);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xxl);
+        }
+
+        .pricing-card {
+            background: var(--dark-navy-800);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-xl);
+            position: relative;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 30px -15px rgba(100, 255, 218, 0.1);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--accent-gold);
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-8px);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-gold);
+            color: var(--dark-navy-900);
+            padding: 6px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .card-title {
+            font-family: var(--font-heading);
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--light-slate-50);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .card-subtitle {
+            color: var(--slate-400);
+            font-size: 14px;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .price-display {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .price-main {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--light-slate-50);
+            display: block;
+        }
+
+        .price-sub {
+            font-size: 16px;
+            color: var(--slate-400);
+            margin-top: var(--spacing-xs);
+        }
+
+        .cta-button {
+            width: 100%;
+            background: var(--accent-gold);
+            color: var(--dark-navy-900);
+            padding: 16px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .cta-button:hover {
+            background: var(--accent-gold-hover);
+            transform: translateY(-2px);
+        }
+
+        .features-list {
+            list-style: none;
+            border-top: 1px solid #303C55;
+            padding-top: var(--spacing-lg);
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) 0;
+            font-size: 16px;
+        }
+
+        .features-list i {
+            color: var(--success);
+            width: 20px;
+            text-align: center;
+        }
+
+        .not-included {
+            color: var(--slate-400);
+        }
+
+        .not-included i {
+            color: var(--slate-400);
+        }
+
+        /* Comparison Table */
+        .comparison-section {
+            margin-top: var(--spacing-xxl);
+            padding: var(--spacing-xl) 0;
+            background: var(--dark-navy-800);
+            border-radius: var(--radius-md);
+        }
+
+        .comparison-header {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+            padding: 0 var(--spacing-lg);
+        }
+
+        .comparison-header h3 {
+            font-family: var(--font-heading);
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--light-slate-50);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .comparison-table {
+            overflow-x: auto;
+            padding: 0 var(--spacing-lg);
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        .table th,
+        .table td {
+            padding: var(--spacing-md);
+            text-align: left;
+            border-bottom: 1px solid var(--dark-navy-800);
+        }
+
+        .table th {
+            font-weight: 600;
+            color: var(--light-slate-50);
+            background: var(--dark-navy-900);
+        }
+
+        .table td {
+            color: var(--light-slate-100);
+        }
+
+        .table .feature-name {
+            font-weight: 500;
+        }
+
+        .table .check {
+            color: var(--success);
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .table .not-available {
+            color: var(--slate-400);
+            text-align: center;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: var(--spacing-xxl) 0;
+            background: var(--dark-navy-900);
+        }
+
+        .faq .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+        }
+
+        .faq h2 {
+            font-family: var(--font-heading);
+            font-size: 40px;
+            font-weight: 600;
+            color: var(--light-slate-50);
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--dark-navy-800);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .faq-question {
+            background: none;
+            border: none;
+            width: 100%;
+            padding: var(--spacing-lg) 0;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--light-slate-50);
+        }
+
+        .faq-question i {
+            color: var(--accent-gold);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-question.active i {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0;
+        }
+
+        .faq-answer.active {
+            max-height: 200px;
+            padding-bottom: var(--spacing-lg);
+        }
+
+        .faq-answer p {
+            color: var(--light-slate-100);
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-navy-800);
+            padding: var(--spacing-xl) 0;
+            text-align: center;
+        }
+
+        .footer .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+        }
+
+        .footer p {
+            color: var(--slate-400);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-lg);
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--light-slate-100);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 40px;
+            }
+            
+            .hero .value-props {
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-card.featured {
+                transform: none;
+            }
+            
+            .pricing-card.featured:hover {
+                transform: translateY(-8px);
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .table {
+                font-size: 14px;
+            }
+            
+            .table th,
+            .table td {
+                padding: var(--spacing-sm);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .pricing-card {
+                padding: var(--spacing-lg);
+            }
+            
+            .card-title {
+                font-size: 24px;
+            }
+            
+            .price-main {
+                font-size: 28px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .pricing-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .pricing-card:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .pricing-card:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .pricing-card:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="#" class="logo">TokenPlatform</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <a href="#contact" class="cta-primary">Get Started</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Launch Your Precious Metals Token Platform</h1>
+            <p class="subtitle">Complete whitelabel solution for Gold, Silver & Platinum tokenization. Choose the perfect package for your business.</p>
+            
+            <div class="value-props">
+                <div class="value-prop">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Complete Platform Setup</span>
+                </div>
+                <div class="value-prop">
+                    <i class="fas fa-check-circle"></i>
+                    <span>White-label Branding</span>
+                </div>
+                <div class="value-prop">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Vault Integration</span>
+                </div>
+                <div class="value-prop">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Payment & KYC Ready</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="pricing-header">
+                <h2>Choose Your Package</h2>
+                <p>Transparent pricing with no hidden costs. All packages include complete platform setup and ongoing support.</p>
+            </div>
+
+            <div class="pricing-grid">
+                <!-- White Label Lite -->
+                <div class="pricing-card">
+                    <div class="card-header">
+                        <h3 class="card-title">White Label Lite</h3>
+                        <p class="card-subtitle">Perfect for small businesses getting started</p>
+                        <div class="price-display">
+                            <span class="price-main">₹25K - ₹75K</span>
+                            <div class="price-sub">Setup Fee + ₹10K - ₹25K/month</div>
+                        </div>
+                        <a href="#contact" class="cta-button">Get Started</a>
+                    </div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i> Basic tokenization (Gold, Silver, Platinum)</li>
+                        <li><i class="fas fa-check"></i> Basic branding (logo & colors)</li>
+                        <li><i class="fas fa-check"></i> Mobile app (shared infrastructure)</li>
+                        <li><i class="fas fa-check"></i> Admin dashboard (basic features)</li>
+                        <li><i class="fas fa-check"></i> Customer portal</li>
+                        <li><i class="fas fa-check"></i> Standard KYC/AML</li>
+                        <li><i class="fas fa-check"></i> Up to 100 customers</li>
+                        <li><i class="fas fa-check"></i> Email support (24hr response)</li>
+                        <li class="not-included"><i class="fas fa-times"></i> Custom API access</li>
+                        <li class="not-included"><i class="fas fa-times"></i> Advanced analytics</li>
+                        <li class="not-included"><i class="fas fa-times"></i> Custom blockchain integration</li>
+                    </ul>
+                </div>
+
+                <!-- Whitelabel Pro (Featured) -->
+                <div class="pricing-card featured">
+                    <div class="popular-badge">Most Popular</div>
+                    <div class="card-header">
+                        <h3 class="card-title">Whitelabel Pro</h3>
+                        <p class="card-subtitle">Ideal for growing businesses and commercial ventures</p>
+                        <div class="price-display">
+                            <span class="price-main">₹1L - ₹2.5L</span>
+                            <div class="price-sub">Setup Fee + ₹50K - ₹1L/month</div>
+                        </div>
+                        <a href="#contact" class="cta-button">Start Commercial Trial</a>
+                    </div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i> Complete white-label branding</li>
+                        <li><i class="fas fa-check"></i> Custom domain setup</li>
+                        <li><i class="fas fa-check"></i> Advanced trading features</li>
+                        <li><i class="fas fa-check"></i> Custom API access & integrations</li>
+                        <li><i class="fas fa-check"></i> Premium vault integration</li>
+                        <li><i class="fas fa-check"></i> Enhanced KYC/AML compliance</li>
+                        <li><i class="fas fa-check"></i> Advanced analytics dashboard</li>
+                        <li><i class="fas fa-check"></i> Up to 1,000 customers</li>
+                        <li><i class="fas fa-check"></i> 24/7 support (12hr response)</li>
+                        <li><i class="fas fa-check"></i> Dedicated infrastructure</li>
+                        <li class="not-included"><i class="fas fa-times"></i> Private blockchain network</li>
+                    </ul>
+                </div>
+
+                <!-- Enterprise Startup -->
+                <div class="pricing-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Enterprise Startup</h3>
+                        <p class="card-subtitle">For established businesses ready for enterprise features</p>
+                        <div class="price-display">
+                            <span class="price-main">₹10L</span>
+                            <div class="price-sub">Setup Fee + ₹2L/month</div>
+                        </div>
+                        <a href="#contact" class="cta-button">Contact Sales</a>
+                    </div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i> All Pro features</li>
+                        <li><i class="fas fa-check"></i> Dedicated infrastructure</li>
+                        <li><i class="fas fa-check"></i> Custom blockchain integration</li>
+                        <li><i class="fas fa-check"></i> Advanced security features</li>
+                        <li><i class="fas fa-check"></i> Comprehensive API suite</li>
+                        <li><i class="fas fa-check"></i> Priority support</li>
+                        <li><i class="fas fa-check"></i> Custom compliance reporting</li>
+                        <li><i class="fas fa-check"></i> Up to 1,000 customers</li>
+                        <li><i class="fas fa-check"></i> Dedicated account manager</li>
+                        <li><i class="fas fa-check"></i> SLA guarantees</li>
+                        <li class="not-included"><i class="fas fa-times"></i> Private blockchain network</li>
+                    </ul>
+                </div>
+
+                <!-- Enterprise Ultimate -->
+                <div class="pricing-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Enterprise Ultimate</h3>
+                        <p class="card-subtitle">Maximum customization and support for large enterprises</p>
+                        <div class="price-display">
+                            <span class="price-main">₹25L - ₹50L</span>
+                            <div class="price-sub">Setup Fee + ₹3.5L - ₹5L/month</div>
+                        </div>
+                        <a href="#contact" class="cta-button">Contact Sales</a>
+                    </div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i> All Enterprise features</li>
+                        <li><i class="fas fa-check"></i> Private blockchain network</li>
+                        <li><i class="fas fa-check"></i> Custom feature development</li>
+                        <li><i class="fas fa-check"></i> White-label marketplace integration</li>
+                        <li><i class="fas fa-check"></i> Dedicated infrastructure</li>
+                        <li><i class="fas fa-check"></i> 24/7 dedicated support team</li>
+                        <li><i class="fas fa-check"></i> Unlimited customers</li>
+                        <li><i class="fas fa-check"></i> Custom integrations</li>
+                        <li><i class="fas fa-check"></i> Enterprise-grade security</li>
+                        <li><i class="fas fa-check"></i> Custom SLA agreements</li>
+                        <li><i class="fas fa-check"></i> Dedicated deployment team</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Feature Comparison Table -->
+            <div class="comparison-section">
+                <div class="comparison-header">
+                    <h3>Detailed Feature Comparison</h3>
+                    <p>Compare all features across packages to find the perfect fit for your business needs</p>
+                </div>
+                <div class="comparison-table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="feature-name">Feature</th>
+                                <th>White Label Lite</th>
+                                <th>Whitelabel Pro</th>
+                                <th>Enterprise Startup</th>
+                                <th>Enterprise Ultimate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="feature-name">Setup Fee</td>
+                                <td>₹25K - ₹75K</td>
+                                <td>₹1L - ₹2.5L</td>
+                                <td>₹10L</td>
+                                <td>₹25L - ₹50L</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Monthly Support</td>
+                                <td>₹10K - ₹25K</td>
+                                <td>₹50K - ₹1L</td>
+                                <td>₹2L</td>
+                                <td>₹3.5L - ₹5L</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Max Customers</td>
+                                <td>100</td>
+                                <td>1,000</td>
+                                <td>1,000</td>
+                                <td>Unlimited</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Branding Level</td>
+                                <td>Basic Logo</td>
+                                <td>Full Branding</td>
+                                <td>Complete Custom</td>
+                                <td>Enterprise Custom</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Mobile App</td>
+                                <td class="check">✓</td>
+                                <td class="check">✓</td>
+                                <td class="check">✓</td>
+                                <td class="check">✓</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Admin Dashboard</td>
+                                <td>Basic</td>
+                                <td>Advanced</td>
+                                <td>Enterprise</td>
+                                <td>Custom Enterprise</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Custom API</td>
+                                <td class="not-available">—</td>
+                                <td class="check">✓</td>
+                                <td class="check">✓</td>
+                                <td class="check">✓</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Blockchain Integration</td>
+                                <td>Shared</td>
+                                <td>Dedicated</td>
+                                <td>Custom</td>
+                                <td>Private Network</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Vault Integration</td>
+                                <td>Standard API</td>
+                                <td>Premium</td>
+                                <td>Dedicated</td>
+                                <td>Enterprise</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">KYC/AML</td>
+                                <td>Basic</td>
+                                <td>Advanced</td>
+                                <td>Enterprise</td>
+                                <td>Custom Compliance</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Support Response</td>
+                                <td>24hrs</td>
+                                <td>12hrs</td>
+                                <td>Priority</td>
+                                <td>4hrs Dedicated</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Security Features</td>
+                                <td>Standard</td>
+                                <td>Enhanced</td>
+                                <td>Bank Grade</td>
+                                <td>Enterprise Grade</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Analytics Dashboard</td>
+                                <td>Basic</td>
+                                <td>Advanced</td>
+                                <td>Enterprise BI</td>
+                                <td>Custom BI</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <button class="faq-question">
+                    What exactly do I get with each package?
+                    <i class="fas fa-plus"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Each package includes a complete tokenization platform with your branding. The main differences are in the level of customization, customer capacity, API access, and support quality. Lite packages are perfect for testing the market, while Enterprise packages provide maximum customization and dedicated resources.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    How quickly can I get started?
+                    <i class="fas fa-plus"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Setup times vary by package: Lite packages can be deployed in 1 week, Pro packages in 2 weeks, and Enterprise packages in 4-6 weeks. This includes platform setup, branding customization, testing, and staff training.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    Do you provide ongoing support and maintenance?
+                    <i class="fas fa-plus"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes! All packages include ongoing support. Lite packages get email support with 24-hour response times. Pro packages get 24/7 support with 12-hour response times. Enterprise packages include dedicated support teams with 4-hour response times and dedicated account managers.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    Can I upgrade my package later?
+                    <i class="fas fa-plus"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Absolutely! Many clients start with Lite or Pro packages and upgrade as their business grows. We offer seamless migrations to higher tiers with prorated pricing. This allows you to scale your platform as your customer base expands.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    What's included in the vault integration?
+                    <i class="fas fa-plus"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>All packages include integration with certified vaults (MMTC-PAMP, SafeGold, Augmont). Lite packages use standard API connections, while Pro and Enterprise packages get premium integrations with real-time inventory tracking, enhanced security, and dedicated vault relationships.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    Is there a setup fee or are there any hidden costs?
+                    <i class="fas fa-plus"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Our pricing is completely transparent. The setup fee covers the complete platform deployment and customization. Monthly fees cover hosting, maintenance, support, and platform updates. There are no hidden costs - what you see is what you pay.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Whitelabel Token Platform. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Support</a>
+                <a href="#">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Accordion functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const icon = question.querySelector('i');
+                
+                // Toggle active state
+                question.classList.toggle('active');
+                answer.classList.toggle('active');
+                
+                // Rotate icon
+                if (question.classList.contains('active')) {
+                    icon.style.transform = 'rotate(45deg)';
+                } else {
+                    icon.style.transform = 'rotate(0deg)';
+                }
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(10, 25, 47, 0.95)';
+            } else {
+                header.style.background = 'var(--dark-navy-900)';
+            }
+        });
+
+        // Animate pricing cards on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.pricing-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

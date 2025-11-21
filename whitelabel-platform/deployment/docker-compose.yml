@@ -1,0 +1,276 @@
+version: '3.8'
+
+services:
+  # Main Whitelabel Token Platform API
+  api:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://postgres:password@postgres:5432/whitelabel_tokens
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=${JWT_SECRET}
+      - BLOCKCHAIN_PROVIDER=http://hyperledger-fabric:8545
+    depends_on:
+      - postgres
+      - redis
+      - hyperledger-fabric
+    volumes:
+      - ./client-assets:/app/client-assets
+      - ./logs:/app/logs
+    restart: unless-stopped
+    networks:
+      - whitelabel-network
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=whitelabel_tokens
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ../database/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    networks:
+      - whitelabel-network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    networks:
+      - whitelabel-network
+
+  # Hyperledger Fabric Network
+  hyperledger-fabric:
+    image: hyperledger/fabric-peer:latest
+    environment:
+      - FABRIC_CA_CLIENTCONFIG_PATH=/etc/hyperledger/fabric/client-config.yaml
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=whitelabel-network
+      - CORE_LOGGING_LEVEL=INFO
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_PROFILE_ENABLED=false
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      - CORE_PEER_ID=peer0.whitelabel.example.com
+      - CORE_PEER_ADDRESS=peer0.whitelabel.example.com:7051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.whitelabel.example.com:7052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.whitelabel.example.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.whitelabel.example.com:7051
+      - CORE_PEER_LOCALMSPID=BGTOrgMSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/msp
+      - CORE_OPERATIONS_LISTENADDRESS=peer0.whitelabel.example.com:17051
+      - CORE_METRICS_PROVIDER=prometheus
+      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"peer0"}
+      - CORE_CHAINCODE_EXECUTETIMEOUT=300s
+    volumes:
+      - /var/run/docker.sock:/host/var/run/docker.sock
+      - ./fabric-config:/etc/hyperledger/fabric
+      - ./fabric-data:/var/hyperledger/production
+    ports:
+      - "7051:7051"
+      - "17051:17051"
+    restart: unless-stopped
+    networks:
+      - whitelabel-network
+
+  # Nginx Reverse Proxy & Load Balancer
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./ssl:/etc/nginx/ssl
+      - ./client-assets:/var/www/client-assets
+    depends_on:
+      - api
+    restart: unless-stopped
+    networks:
+      - whitelabel-network
+
+  # Prometheus Monitoring
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    restart: unless-stopped
+    networks:
+      - whitelabel-network
+
+  # Grafana Dashboard
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+    networks:
+      - whitelabel-network
+
+  # Payment Gateway Service
+  payment-gateway:
+    build:
+      context: ./services/payment-gateway
+      dockerfile: Dockerfile
+    environment:
+      - RAZORPAY_KEY_ID=${RAZORPAY_KEY_ID}
+      - RAZORPAY_KEY_SECRET=${RAZORPAY_KEY_SECRET}
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - WEBHOOK_SECRET=${WEBHOOK_SECRET}
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./logs/payment:/app/logs
+    restart: unless-stopped
+    networks:
+      - whitelabel-network
+
+  # KYC Verification Service
+  kyc-service:
+    build:
+      context: ./services/kyc-service
+      dockerfile: Dockerfile
+    environment:
+      - UIDAI_API_KEY=${UIDAI_API_KEY}
+      - ITD_API_KEY=${ITD_API_KEY}
+      - AML_API_KEY=${AML_API_KEY}
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./kyc-documents:/app/documents
+      - ./logs/kyc:/app/logs
+    restart: unless-stopped
+    networks:
+      - whitelabel-network
+
+  # Vault Integration Service
+  vault-service:
+    build:
+      context: ./services/vault-service
+      dockerfile: Dockerfile
+    environment:
+      - MMTC_PAMP_API_KEY=${MMTC_PAMP_API_KEY}
+      - MMTC_PAMP_API_SECRET=${MMTC_PAMP_API_SECRET}
+      - SAFEGOLD_API_KEY=${SAFEGOLD_API_KEY}
+      - AUGMONT_API_KEY=${AUGMONT_API_KEY}
+    depends_on:
+      - postgres
+      - redis
+      - hyperledger-fabric
+    volumes:
+      - ./vault-certificates:/app/certificates
+      - ./logs/vault:/app/logs
+    restart: unless-stopped
+    networks:
+      - whitelabel-network
+
+  # Background Job Processor
+  worker:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile.worker
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://postgres:password@postgres:5432/whitelabel_tokens
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./logs/worker:/app/logs
+    restart: unless-stopped
+    networks:
+      - whitelabel-network
+
+  # Log Aggregation
+  elk-logstash:
+    image: logstash:7.17.0
+    volumes:
+      - ./elk/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+      - ./logs:/var/log/app:ro
+    ports:
+      - "5044:5044"
+    depends_on:
+      - elasticsearch
+    restart: unless-stopped
+    networks:
+      - whitelabel-network
+
+  # Elasticsearch for Logs
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+    restart: unless-stopped
+    networks:
+      - whitelabel-network
+
+  # Kibana for Log Visualization
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.17.0
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+    restart: unless-stopped
+    networks:
+      - whitelabel-network
+
+volumes:
+  postgres_data:
+  redis_data:
+  prometheus_data:
+  grafana_data:
+  elasticsearch_data:
+
+networks:
+  whitelabel-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
